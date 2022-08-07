@@ -1,0 +1,77 @@
+version: '3.8'
+services:
+    pgsql:
+        image: 'postgres:14-alpine'
+        ports:
+            - '${DB_PORT:-5432}:5432'
+        environment:
+            POSTGRES_DB: '${DB_DATABASE}'
+            POSTGRES_USER: '${DB_USERNAME}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+        volumes:
+            - 'dbdata:/var/lib/postgresql/data'
+        networks:
+            - phpnetwork
+        healthcheck:
+            test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}"]
+            retries: 3
+            timeout: 5s
+    redis:
+        image: 'redis:alpine'
+        ports:
+            - '${REDIS_PORT:-6379}:6379'
+        volumes:
+            - 'redisdata:/data'
+        networks:
+            - phpnetwork
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            retries: 3
+            timeout: 5s
+    nginx:
+        build:
+            context: .
+            dockerfile: ./nginx/Dockerfile
+        ports:
+            - '${NGINX_PORT:-80}:80'
+        volumes:
+            - ./app:/var/www/html:delegated
+        depends_on:
+            - pgsql
+            - redis
+            - php
+        networks:
+            - phpnetwork
+    php:
+        build:
+            context: .
+            dockerfile: ./php/Dockerfile
+        volumes:
+            - ./app:/var/www/html:delegated
+        ports:
+            - '9000:9000'
+        networks:
+            - phpnetwork
+        depends_on:
+            - pgsql
+            - redis
+    node:
+        build:
+            context: .
+            dockerfile: ./node/Dockerfile
+        volumes:
+            - ./frontend:/home/node/app
+        ports:
+            - '3000:3000'
+        networks:
+            - phpnetwork
+        depends_on:
+            - php
+networks:
+    phpnetwork:
+        driver: bridge
+volumes:
+    dbdata:
+        driver: local
+    redisdata:
+        driver: local
