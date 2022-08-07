@@ -59,8 +59,6 @@ services:
         build:
             context: .
             dockerfile: ./node/Dockerfile
-        volumes:
-            - ./frontend:/home/node/app
         ports:
             - '3000:3000'
         networks:
