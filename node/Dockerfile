@@ -5,5 +5,3 @@ WORKDIR /home/node/app
 ADD ./frontend /home/node/app
 
 RUN npm install
-
-RUN npm start
