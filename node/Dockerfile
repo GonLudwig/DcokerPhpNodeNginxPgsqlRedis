@@ -7,3 +7,5 @@ ADD ./node/frontend/package*.json ./
 RUN npm install
 
 ADD ./node/frontend .
+
+RUN npm run build

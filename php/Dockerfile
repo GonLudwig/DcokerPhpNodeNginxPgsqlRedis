@@ -1,8 +1,8 @@
 FROM php:8.1-fpm-alpine
 
-RUN mkdir -p /var/www/html
+RUN mkdir -p /var/www/html/backend
 
-WORKDIR /var/www/html
+WORKDIR /var/www/html/backend
 
 RUN apk add --no-cache \
     freetype \
