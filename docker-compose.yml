@@ -49,6 +49,7 @@ services:
             dockerfile: ./php/Dockerfile
         volumes:
             - ./php/app:/var/www/html/backend:delegated
+            - ./php/php.ini:/usr/local/etc/php/conf.d/php.ini:ro
         ports:
             - '9000:9000'
         networks:
