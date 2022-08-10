@@ -19,3 +19,7 @@ RUN docker-php-ext-configure gd \
     --with-jpeg
 
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
+
+ADD ./app /var/www/html/backend
+
+RUN chown 1000:www-data /var/www/html/backend/storage/logs/laravel.log
