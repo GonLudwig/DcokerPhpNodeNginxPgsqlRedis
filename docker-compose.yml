@@ -37,6 +37,8 @@ services:
         volumes:
             - ./app:/var/www/html/backend:delegated
             - nodeapp:/var/www/html/frontend:delegated
+            - ./log/backend.com.br.access.log:/var/log/nginx/backend.com.br.access.log
+            - ./log/backend.com.br.error.log:/var/log/nginx/backend.com.br.error.log
         depends_on:
             - pgsql
             - redis
