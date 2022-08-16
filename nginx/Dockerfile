@@ -12,4 +12,4 @@ RUN mkdir -p /var/www/html/frontend
 
 RUN addgroup -g 1000 laravel && adduser -G laravel -g laravel -s /bin/sh -D laravel
 
-RUN chown laravel:laravel /var/www/html
+RUN chown -R laravel:laravel /var/www/html

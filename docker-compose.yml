@@ -37,8 +37,7 @@ services:
         volumes:
             - ./app:/var/www/html/backend:delegated
             - nodeapp:/var/www/html/frontend:delegated
-            - ./log/backend.com.br.access.log:/var/log/nginx/backend.com.br.access.log
-            - ./log/backend.com.br.error.log:/var/log/nginx/backend.com.br.error.log
+            - logs:/var/log/nginx
         depends_on:
             - pgsql
             - redis
@@ -59,18 +58,50 @@ services:
         depends_on:
             - pgsql
             - redis
+    artisan:
+        build:
+            context: .
+            dockerfile: ./php/Dockerfile
+        container_name: artisan
+        volumes:
+            - ./app:/var/www/html/backend
+        working_dir: /var/www/html
+        depends_on:
+            - pgsql
+            - redis
+        user: laravel
+        networks:
+            - phpnetwork
+        entrypoint: ['php', '/var/www/html/backend/artisan']
+    composer:
+        build:
+            context: .
+            dockerfile: ./php/composer/Dockerfile
+        container_name: composer
+        volumes:
+            - ./app:/var/www/html
+        working_dir: /var/www/html
+        depends_on:
+            - php
+        user: laravel
+        networks:
+            - phpnetwork
+        entrypoint: ['composer', '--ignore-platform-reqs']
     node:
         build:
             context: .
             dockerfile: ./node/Dockerfile
+        container_name: node
         volumes:
             - nodeapp:/usr/src/app
+        working_dir: /usr/src/app
         ports:
             - '3000:3000'
         networks:
             - phpnetwork
         depends_on:
             - php
+        entrypoint: ['npm']
 networks:
     phpnetwork:
         driver: bridge
@@ -80,4 +111,6 @@ volumes:
     redisdata:
         driver: local
     nodeapp:
+        driver: local
+    logs:
         driver: local
