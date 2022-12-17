@@ -18,7 +18,7 @@ Create enviorment configuration files.
 cp .env.example .env
 ```
 ```sh
-cp /app/.env.example /app/.env
+cp app/.env.example app/.env
 ```
 Start the project.
 ```sh
@@ -31,6 +31,13 @@ docker-compose run --rm composer install
 Create database and tables with Artisan.
 ```sh
 docker-compose run --rm artisan migrate
+```
+Run front-end in development
+```sh
+docker-compose run --rm node install
+```
+```sh
+docker-compose run --rm -p3000:3000 node start
 ```
 ### Commands
 
@@ -48,3 +55,6 @@ Run npm commands
 ```sh
 docker-compose run --rm node
 ```
+### Deploy in production
+You must comment line 39, 93 and 94 in docker-compose.yml.</br>
+You must uncoment lines in node/Dockerfile

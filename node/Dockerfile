@@ -2,10 +2,11 @@ FROM node:18-alpine
 
 WORKDIR /usr/src/app
 
-ADD ./node/frontend/package*.json ./
+# Uncomment the lines to run in production
+# ADD ./frontend/package*.json ./
 
-RUN npm install
+# RUN npm install
 
-ADD ./node/frontend .
+ADD ./frontend .
 
-RUN npm run build
+# RUN npm run build

@@ -36,7 +36,7 @@ services:
             - '${NGINX_PORT:-80}:80'
         volumes:
             - ./app:/var/www/html/backend:delegated
-            - nodeapp:/var/www/html/frontend:delegated
+            - ./frontend:/var/www/html/frontend:delegated
             - logs:/var/log/nginx
         depends_on:
             - pgsql
@@ -51,8 +51,6 @@ services:
             dockerfile: ./php/Dockerfile
         volumes:
             - ./app:/var/www/html/backend
-        ports:
-            - '9000:9000'
         networks:
             - phpnetwork
         depends_on:
@@ -93,7 +91,7 @@ services:
             dockerfile: ./node/Dockerfile
         container_name: node
         volumes:
-            - nodeapp:/usr/src/app
+            - ./frontend:/usr/src/app
         working_dir: /usr/src/app
         ports:
             - '3000:3000'
@@ -109,8 +107,6 @@ volumes:
     dbdata:
         driver: local
     redisdata:
-        driver: local
-    nodeapp:
         driver: local
     logs:
         driver: local

@@ -1,8 +1,0 @@
-2022/08/16 20:06:18 [error] 41#41: *2 FastCGI sent in stderr: "PHP message: PHP Warning:  require(/var/www/html/backend/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /var/www/html/backend/public/index.php on line 34PHP message: PHP Fatal error:  Uncaught Error: Failed opening required '/var/www/html/backend/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /var/www/html/backend/public/index.php:34
-Stack trace:
-#0 {main}
-  thrown in /var/www/html/backend/public/index.php on line 34" while reading response header from upstream, client: 172.22.0.1, server: backend.com.br, request: "GET / HTTP/1.1", upstream: "fastcgi://172.22.0.4:9000", host: "backend.com.br:5000"
-2022/08/16 20:13:20 [error] 40#40: *1 FastCGI sent in stderr: "PHP message: PHP Warning:  require(/var/www/html/backend/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /var/www/html/backend/public/index.php on line 34PHP message: PHP Fatal error:  Uncaught Error: Failed opening required '/var/www/html/backend/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /var/www/html/backend/public/index.php:34
-Stack trace:
-#0 {main}
-  thrown in /var/www/html/backend/public/index.php on line 34" while reading response header from upstream, client: 172.24.0.1, server: backend.com.br, request: "GET / HTTP/1.1", upstream: "fastcgi://172.24.0.4:9000", host: "backend.com.br:5000"
